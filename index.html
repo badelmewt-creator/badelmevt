@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>Badelmevt</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
@@ -158,7 +159,6 @@ input:focus{
     display:none;
 }
 
-/* HESAPLANAN SAYILAR */
 .rate-val{
     color:var(--accent);
     font-size:30px;
@@ -263,6 +263,50 @@ input:focus{
     border-bottom:1px solid var(--line);
 }
 
+/* SWITCH */
+
+.switch{
+    position:relative;
+    width:46px;
+    height:25px;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+    position:absolute;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    cursor:pointer;
+    background:#30363d;
+    border-radius:30px;
+    transition:.3s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:19px;
+    height:19px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.3s;
+}
+
+.switch input:checked + .slider{
+    background:var(--accent);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(21px);
+}
+
 .btn-clear{
     width:100%;
     padding:15px;
@@ -358,7 +402,10 @@ nav{
 </div>
 
 <div>
-<div class="apex-text">SIZINTI</div>
+
+<div class="apex-text">
+SIZINTI
+</div>
 
 <small style="color:var(--accent);font-weight:bold;">
 Badelmevt v5.0
@@ -368,8 +415,13 @@ Badelmevt v5.0
 
 </div>
 
-<div class="top-settings-btn" id="settings-btn" onclick="showSettings()">
+<div
+class="top-settings-btn"
+id="settings-btn"
+onclick="showSettings()">
+
 <i class="fa-solid fa-sliders"></i>
+
 </div>
 
 </header>
@@ -381,7 +433,9 @@ Badelmevt v5.0
 
 <div class="card">
 
-<span class="label">İhale Fiyatı</span>
+<span class="label">
+İhale Fiyatı
+</span>
 
 <input
 type="text"
@@ -394,8 +448,12 @@ oninput="hesapla()">
 
 <div class="card" id="yuzdeListesi"></div>
 
-<button class="btn-clear" onclick="resetYuzde()">
+<button
+class="btn-clear"
+onclick="resetYuzde()">
+
 TÜMÜNÜ SIFIRLA
+
 </button>
 
 </div>
@@ -409,9 +467,14 @@ TÜMÜNÜ SIFIRLA
 
 <div class="calc-display-area">
 
-<div class="calc-history" id="calcHistory"></div>
+<div
+class="calc-history"
+id="calcHistory">
+</div>
 
-<div class="calc-current" id="calcDisplay">
+<div
+class="calc-current"
+id="calcDisplay">
 0
 </div>
 
@@ -419,7 +482,9 @@ TÜMÜNÜ SIFIRLA
 
 <div class="calc-grid">
 
-<button class="calc-btn op" onclick="calcCommand('C')">
+<button
+class="calc-btn op"
+onclick="calcCommand('C')">
 C
 </button>
 
@@ -432,7 +497,8 @@ ontouchstart="startDel();event.preventDefault();"
 ontouchend="stopDel()"
 ontouchcancel="stopDel()">
 
-<svg viewBox="0 0 24 24"
+<svg
+viewBox="0 0 24 24"
 width="20"
 height="20"
 fill="none"
@@ -447,11 +513,15 @@ stroke-width="2">
 
 </button>
 
-<button class="calc-btn op" onclick="calcCommand('%')">
+<button
+class="calc-btn op"
+onclick="calcCommand('%')">
 %
 </button>
 
-<button class="calc-btn op" onclick="calcCommand('/')">
+<button
+class="calc-btn op"
+onclick="calcCommand('/')">
 ÷
 </button>
 
@@ -486,15 +556,22 @@ stroke-width="2">
 
 <div class="card">
 
-<span class="label">Solid Renk Paketi</span>
+<span class="label">
+Solid Renk Paketi
+</span>
 
-<div class="color-grid" id="solidColorGrid"></div>
+<div
+class="color-grid"
+id="solidColorGrid">
+</div>
 
 </div>
 
 <div class="card">
 
-<span class="label">Görünür Oranlar</span>
+<span class="label">
+Görünür Oranlar
+</span>
 
 <div id="switchListesi"></div>
 
@@ -523,7 +600,9 @@ class="nav-item active"
 id="nav-yuzde"
 onclick="showTab('tab-yuzde',this)">
 
-<span class="nav-icon-glass">%</span>
+<span class="nav-icon-glass">
+%
+</span>
 
 Yüzdelik
 
@@ -549,24 +628,34 @@ Hesap Makinesi
 
 <script>
 
-// SAĞ TIK ENGELİ
+/* SAĞ TIK ENGELİ */
 
-document.addEventListener('contextmenu',function(e){
-e.preventDefault();
+document.addEventListener(
+'contextmenu',
+function(e){
+    e.preventDefault();
 });
 
 
-// GELİŞTİRİCİ ARAÇLARI ENGELİ
+/* GELİŞTİRİCİ ARAÇLARI ENGELİ */
 
 document.onkeydown=function(e){
 
 if(
 e.keyCode===123 ||
-(e.ctrlKey && e.shiftKey &&
-(e.keyCode===73 ||
+(
+e.ctrlKey &&
+e.shiftKey &&
+(
+e.keyCode===73 ||
 e.keyCode===74 ||
-e.keyCode===67)) ||
-(e.ctrlKey && e.keyCode===85)
+e.keyCode===67
+)
+) ||
+(
+e.ctrlKey &&
+e.keyCode===85
+)
 ){
 
 e.preventDefault();
@@ -577,7 +666,7 @@ return false;
 };
 
 
-// SADECE BU 5 ORAN VAR
+/* SADECE BU 5 ORAN VAR */
 
 const oranlar=[
 85,
@@ -588,14 +677,33 @@ const oranlar=[
 ];
 
 
-// RENKLER
+/* RENKLER */
 
 const solidColors=[
-'#00d2ff','#ff3131','#008f39','#fff01f','#ff7f50',
-'#8a2be2','#00ff7f','#ff1493','#00ced1','#ffd700',
-'#ff4500','#da70d6','#adff2f','#1e90ff','#ff69b4',
-'#32cd32','#8b4513','#4682b4','#d2691e','#9932cc',
-'#2e8b57','#b22222','#20b2aa','#db7093'
+'#00d2ff',
+'#ff3131',
+'#008f39',
+'#fff01f',
+'#ff7f50',
+'#8a2be2',
+'#00ff7f',
+'#ff1493',
+'#00ced1',
+'#ffd700',
+'#ff4500',
+'#da70d6',
+'#adff2f',
+'#1e90ff',
+'#ff69b4',
+'#32cd32',
+'#8b4513',
+'#4682b4',
+'#d2691e',
+'#9932cc',
+'#2e8b57',
+'#b22222',
+'#20b2aa',
+'#db7093'
 ];
 
 
@@ -608,22 +716,27 @@ let delTimeout;
 let delInterval;
 
 
-// BAŞLANGIÇ
+/* BAŞLANGIÇ */
 
 window.onload=()=>{
 
-initColors();
-initRates();
-loadSavedTheme();
+    initColors();
+
+    initRates();
+
+    loadSavedTheme();
 
 };
 
 
-// RENKLER
+/* RENKLER */
 
 function initColors(){
 
-const sGrid=document.getElementById('solidColorGrid');
+const sGrid=
+document.getElementById('solidColorGrid');
+
+sGrid.innerHTML='';
 
 solidColors.forEach(color=>{
 
@@ -642,12 +755,15 @@ onclick="setSolidTheme('${color}')">
 }
 
 
-// ORANLARI OLUŞTUR
+/* ORANLARI OLUŞTUR */
 
 function initRates(){
 
-const yList=document.getElementById('yuzdeListesi');
-const sList=document.getElementById('switchListesi');
+const yList=
+document.getElementById('yuzdeListesi');
+
+const sList=
+document.getElementById('switchListesi');
 
 yList.innerHTML='';
 sList.innerHTML='';
@@ -661,7 +777,8 @@ let customStyle='';
 
 const trophySvg=color=>`
 
-<svg viewBox="0 0 24 24"
+<svg
+viewBox="0 0 24 24"
 width="16"
 height="16"
 fill="none"
@@ -704,13 +821,7 @@ customStyle='color:#CD7F32!important;';
 
 let valueStyle='';
 
-if(o===40){
-
-valueStyle='transform:translateX(10px);';
-
-}
-
-if(o===30){
+if(o===40 || o===30){
 
 valueStyle='transform:translateX(10px);';
 
@@ -719,17 +830,24 @@ valueStyle='transform:translateX(10px);';
 
 yList.innerHTML+=`
 
-<div class="rate-row" id="row-${o}">
+<div
+class="rate-row"
+id="row-${o}">
 
-<span style="display:flex;align-items:center;">
+<span
+style="display:flex;align-items:center;">
+
 ${icon}%${o}
+
 </span>
 
 <span
 class="rate-val"
 id="r${o}"
 style="${valueStyle}${customStyle}">
+
 0,00
+
 </span>
 
 <button
@@ -745,6 +863,17 @@ onclick="kopyala('r${o}')">
 `;
 
 
+/* KAYITLI DURUMU AL */
+
+const saved=
+localStorage.getItem(`rateVisible-${o}`);
+
+const visible=
+saved===null
+?true
+:saved==='true';
+
+
 sList.innerHTML+=`
 
 <div class="setting-item">
@@ -755,7 +884,8 @@ sList.innerHTML+=`
 
 <input
 type="checkbox"
-checked
+id="switch-${o}"
+${visible?'checked':''}
 onchange="toggleRate(${o},this.checked)">
 
 <span class="slider"></span>
@@ -768,20 +898,83 @@ onchange="toggleRate(${o},this.checked)">
 
 });
 
+
+/* KAYITLI GÖRÜNÜRLÜKLERİ UYGULA */
+
+oranlar.forEach(o=>{
+
+const saved=
+localStorage.getItem(`rateVisible-${o}`);
+
+const visible=
+saved===null
+?true
+:saved==='true';
+
+const checkbox=
+document.getElementById(`switch-${o}`);
+
+const row=
+document.getElementById(`row-${o}`);
+
+if(checkbox){
+
+checkbox.checked=visible;
+
+}
+
+if(row){
+
+row.classList.toggle(
+'hidden',
+!visible
+);
+
+}
+
+});
+
 }
 
 
-// TEMA
+/* TEMA */
 
 function resetToDark(){
 
-document.documentElement.style.setProperty('--text','#ffffff');
-document.documentElement.style.setProperty('--panel','#0d1117');
-document.documentElement.style.setProperty('--line','rgba(255,255,255,.08)');
-document.documentElement.style.setProperty('--muted','#8b949e');
-document.documentElement.style.setProperty('--input-bg','rgba(0,0,0,.3)');
-document.documentElement.style.setProperty('--btn-bg','rgba(255,255,255,.03)');
-document.documentElement.style.setProperty('--btn-active','rgba(255,255,255,.1)');
+document.documentElement.style.setProperty(
+'--text',
+'#ffffff'
+);
+
+document.documentElement.style.setProperty(
+'--panel',
+'#0d1117'
+);
+
+document.documentElement.style.setProperty(
+'--line',
+'rgba(255,255,255,.08)'
+);
+
+document.documentElement.style.setProperty(
+'--muted',
+'#8b949e'
+);
+
+document.documentElement.style.setProperty(
+'--input-bg',
+'rgba(0,0,0,.3)'
+);
+
+document.documentElement.style.setProperty(
+'--btn-bg',
+'rgba(255,255,255,.03)'
+);
+
+document.documentElement.style.setProperty(
+'--btn-active',
+'rgba(255,255,255,.1)'
+);
 
 }
 
@@ -789,7 +982,8 @@ document.documentElement.style.setProperty('--btn-active','rgba(255,255,255,.1)'
 function loadSavedTheme(){
 
 const val=
-localStorage.getItem('apexThemeVal')||'#00d2ff';
+localStorage.getItem('apexThemeVal')
+||'#00d2ff';
 
 setSolidTheme(val);
 
@@ -798,7 +992,9 @@ setSolidTheme(val);
 
 function setSolidTheme(hex){
 
-document.body.removeAttribute('data-theme');
+document.body.removeAttribute(
+'data-theme'
+);
 
 resetToDark();
 
@@ -817,6 +1013,9 @@ document.documentElement.style.setProperty(
 '#010409'
 );
 
+
+/* TEMA KAYDI */
+
 localStorage.setItem(
 'apexThemeType',
 'solid'
@@ -830,27 +1029,39 @@ hex
 }
 
 
-// SEKME
+/* SEKME */
 
 function showTab(id,btn){
 
-document.querySelectorAll('.tab-content')
-.forEach(t=>t.classList.remove('active'));
+document
+.querySelectorAll('.tab-content')
+.forEach(t=>
+t.classList.remove('active')
+);
 
-document.querySelectorAll('.nav-item')
-.forEach(n=>n.classList.remove('active'));
+document
+.querySelectorAll('.nav-item')
+.forEach(n=>
+n.classList.remove('active')
+);
 
-document.getElementById('settings-btn')
+document
+.getElementById('settings-btn')
 .classList.remove('active');
 
-const target=document.getElementById(id);
+
+const target=
+document.getElementById(id);
 
 void target.offsetWidth;
 
 target.classList.add('active');
 
+
 if(btn){
+
 btn.classList.add('active');
+
 }
 
 }
@@ -860,7 +1071,8 @@ function showSettings(){
 
 showTab('tab-ayarlar');
 
-document.getElementById('settings-btn')
+document
+.getElementById('settings-btn')
 .classList.add('active');
 
 }
@@ -876,17 +1088,34 @@ document.getElementById('nav-yuzde')
 }
 
 
+/* ORAN GÖRÜNÜRLÜĞÜ */
+
 function toggleRate(o,isVisible){
 
-document
-.getElementById(`row-${o}`)
-.classList
-.toggle('hidden',!isVisible);
+const row=
+document.getElementById(`row-${o}`);
+
+if(row){
+
+row.classList.toggle(
+'hidden',
+!isVisible
+);
 
 }
 
 
-// FORMAT
+/* TELEFONA KAYDET */
+
+localStorage.setItem(
+`rateVisible-${o}`,
+isVisible
+);
+
+}
+
+
+/* FORMAT */
 
 function format(n){
 
@@ -903,7 +1132,7 @@ Number(n.toFixed(3))
 }
 
 
-// HESAPLAMA
+/* HESAPLAMA */
 
 function hesapla(){
 
@@ -928,7 +1157,7 @@ format((val*o)/100);
 }
 
 
-// SIFIRLA
+/* SIFIRLA */
 
 function resetYuzde(){
 
@@ -941,7 +1170,7 @@ hesapla();
 }
 
 
-// KOPYALA
+/* KOPYALA */
 
 function kopyala(id){
 
@@ -962,7 +1191,7 @@ document.execCommand('copy');
 }
 
 
-// HESAP MAKİNESİ
+/* HESAP MAKİNESİ */
 
 const calcDisplay=
 document.getElementById('calcDisplay');
@@ -1101,7 +1330,9 @@ calcPrev!=='' &&
 computeCalc();
 
 calcOp=cmd;
+
 calcPrev=calcCurrent;
+
 shouldResetScreen=true;
 
 }
@@ -1117,6 +1348,7 @@ return;
 computeCalc();
 
 calcOp=undefined;
+
 calcPrev='';
 
 }
@@ -1130,8 +1362,11 @@ function computeCalc(){
 
 let computation;
 
-const prev=parseFloat(calcPrev);
-const current=parseFloat(calcCurrent);
+const prev=
+parseFloat(calcPrev);
+
+const current=
+parseFloat(calcCurrent);
 
 if(
 isNaN(prev) ||
@@ -1180,7 +1415,7 @@ shouldResetScreen=true;
 }
 
 
-// BASILI TUTARAK SİLME
+/* BASILI TUTARAK SİLME */
 
 function startDel(){
 
@@ -1202,12 +1437,13 @@ calcCommand('DEL');
 function stopDel(){
 
 clearTimeout(delTimeout);
+
 clearInterval(delInterval);
 
 }
 
 
-// KLAVYE AÇILINCA ALT MENÜYÜ GİZLE
+/* KLAVYE AÇILINCA ALT MENÜYÜ GİZLE */
 
 const initialHeight=
 window.innerHeight;
